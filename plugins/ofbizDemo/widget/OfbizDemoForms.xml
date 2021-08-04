@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://ofbiz.apache.org/Widget-Form"
+       xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+    <form name="AddOfbizDemo" type="single" target="createOfbizDemoEvent">
+        <!--
+            OFBiz 에는 서비스 정의에 기초하여 form 을 렌더링 해주는 유틸리티가 있습니다.
+            서비스 속성들은 자동으로 찾아져서 폼에 표시될 것입니다.
+            이 기능을 사용하는 방법은 auto-fields-service 태그를 사용하는 것입니다.
+            -->
+        <auto-fields-service service-name="createOfbizDemo"/>
+        <field name="ofbizDemoTypeId" title="${uiLabelMap.CommonType}">
+            <drop-down allow-empty="false" current-description="">
+                <!--
+                drop-down 옵션들은 동적으로 사용될 수 있도록 만들어졌다.
+                -->
+                <entity-options entity-name="OfbizDemoType" description="${description}"
+                                key-field-name="ofbizDemoTypeId">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <!-- 서비스에 정의되어 있는 comments 속성만 override 하여 타이트을 변경해 보았다. -->
+        <field name="comments" title="comments override"/>
+        <field name="submitButton" title="${uiLabelMap.CommonAdd}">
+            <submit button-type="button"/>
+        </field>
+    </form>
+
+    <!-- 검색 조건을 입력하는 폼 -->
+    <form name="FindOfbizDemo" type="single" target="FindOfbizDemo" default-entity-name="OfbizDemo">
+        <field name="noConditionFind">
+            <hidden value="Y"/><!-- 만약 이 항목이 없으면, 모든 필드가 비어 있으면 쿼리가 수행되지 않는다. -->
+        </field>
+        <field name="ofbizDemoId" title="${uiLabelMap.OfbizDemoId}">
+            <text-find/>
+        </field>
+        <field name="firstName" title="${uiLabelMap.OfbizDemoFirstName}">
+            <text-find/>
+        </field>
+        <field name="lastName" title="${uiLabelMap.OfbizDemoLastName}">
+            <text-find/>
+        </field>
+        <field name="ofbizDemoTypeId" title="${uiLabelMap.OfbizDemoType}">
+            <drop-down allow-empty="true" current-description="">
+                <entity-options entity-name="OfbizDemoType" key-field-name="ofbizDemoTypeId"
+                                description="${description}">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+            <submit button-type="button" image-location="/images/icons/magnifier.png"/>
+        </field>
+    </form>
+
+    <!-- 검색 결과를 출력하는 폼 -->
+    <form name="ListOfbizDemo" type="list" list-name="listIt" paginate-target="FindOfbizDemo"
+          default-entity-name="OfbizDemo" separate-columns="true"
+          odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+        <!-- 일반적으로 form 이나 screen 의 action 들은 데이터를 준비하기 위해 사용된다. -->
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="ofbizDemoCtx"/>
+                <field-map field-name="entityName" value="OfbizDemo"/>
+                <field-map field-name="orderBy" from-field="parameters.sortField"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="ofbizDemoId" title="${uiLabelMap.OfbizDemoId}">
+            <display/>
+        </field>
+        <field name="ofbizDemoTypeId" title="${uiLabelMap.OfbizDemoType}">
+            <display-entity entity-name="OfbizDemoType"/>
+        </field>
+        <field name="firstName" title="${uiLabelMap.OfbizDemoFirstName}" sort-field="true">
+            <display/>
+        </field>
+        <field name="lastName" title="${uiLabelMap.OfbizDemoLastName}" sort-field="true">
+            <display/>
+        </field>
+        <field name="comments" title="${uiLabelMap.OfbizDemoComment}">
+            <display/>
+        </field>
+    </form>
+</forms>
