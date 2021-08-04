@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <!-- ========================================================= -->
+    <!-- ======================== Defaults ======================= -->
+    <!-- ========================================================= -->
+    <title>Entity of Brit Component</title>
+    <description>None</description>
+    <version>1.0</version>
+    <default-resource-name>BritEntityLabels</default-resource-name>
+
+    <!-- ========================================================= -->
+    <!-- ======================== Data Model ===================== -->
+    <!-- The modules in this file are as follows:                  -->
+    <!--  - org.apache.ofbiz.brit.setting                          -->
+    <!--  - org.apache.ofbiz.brit.setting.language                 -->
+    <!-- ========================================================= -->
+
+    <!-- Setting 설정 -->
+    <!-- 설정 메인 엔티티. 각 종 설정들이 이 엔티티를 중심으로 확장한다. -->
+    <entity entity-name="Setting" package-name="com.ndsoft.brit" title="Setting Entity">
+        <field name="settingId" type="id">
+            <description>primary sequenced ID</description>
+        </field>
+        <field name="languageSettingId" type="id">
+            <description>Language Setting Foreign Key</description>
+        </field>
+        <prim-key field="settingId"/>
+        <relation type="one" fk-name="FK_SET_LANSET_ID" rel-entity-name="LanguageSetting">
+            <key-map field-name="languageSettingId"/>
+        </relation>
+    </entity>
+
+    <!-- Language Setting 언어 설정 -->
+    <entity entity-name="LanguageSetting" package-name="com.ndsoft.brit" title="Language Setting Entity">
+        <field name="languageSettingId" type="id">
+            <description>Language Setting Primary sequenced ID</description>
+        </field>
+    </entity>
+
+</entitymodel>

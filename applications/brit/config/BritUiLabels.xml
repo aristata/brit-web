@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/ofbiz-properties.xsd">
+    <property key="BritApplicationTitle">
+        <value xml:lang="en">Brit Web Application</value>
+        <value xml:lang="ko_KR">Brit 웹 애플리케이션</value>
+    </property>
+
+    <!-- ********** ********** ********** ********** ********** -->
+    <!-- ********** Main       ********** ********** ********** -->
+    <!-- ********** ********** ********** ********** ********** -->
+    <property key="MainScreenLetTitle">
+        <value xml:lang="en">Welcome</value>
+        <value xml:lang="ko_KR">환영합니다</value>
+    </property>
+</resource>
